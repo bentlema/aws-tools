@@ -5,6 +5,12 @@
 # of the tag specified. Only one tag can be queried at a time.  The value
 # will be output surrounded in double-quotes.
 #
+# I assume that you've already setup the aws cli with 'aws configure'
+#
+# TODO:
+#    - error out if ~/.aws/config doesn't exist
+#    - support for aws cli profiles, so we don't have to use 'default'
+#
 # Are we running on an EC2 instance? If not, bail out.
 # See:  http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/identify_ec2_instances.html
 # Also: http://serverfault.com/questions/462903/how-to-know-if-a-machine-is-an-ec2-instance
