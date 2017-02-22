@@ -22,3 +22,6 @@ get-all-tags
    - As a side-effect of calling get-all-tags, all of the current tag data will be cached
 
 
+ec2-bash-prompt.sh
+
+   - I want to add the local date/time (PST/PDT) in the prompt so I don't have to convert from UTC
