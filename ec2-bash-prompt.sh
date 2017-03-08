@@ -18,6 +18,8 @@ COLOR_LIGHT_GRAY='\e[0;37m'
 BOLD='\e[1m'
 FAINT='\e[2m'
 ITLCS='\e[3m'
+INVERSE_ON='\e[7m'
+INVERSE_OFF='\e[27m'
 BG='\e[48;5;236m' # Dark Gray Background
 
 # These are used to make a gradiant effect
@@ -41,15 +43,23 @@ if [ "${-#*i}" != "$-" ]; then
     EC2_ID=$(curl -s --fail http://169.254.169.254/latest/meta-data/instance-id)
     EC2_AZ=$(curl -s --fail http://169.254.169.254/latest/meta-data/placement/availability-zone)
 
+    # If a Name tag hasn't been set
+    if [ -z $EC2_NAME ]; then
+        EC2_NAME=null
+    fi
+
     case $TERM in
         xterm*)
-            PS1="${BOLD}${COLOR_CYAN}${BG}${EC2_NAME}${OFF}${BOLD}${BG} ${COLOR_BLUE}${BG}${EC2_ID}${OFF}${BOLD}${BG} ${COLOR_RED}${BG}${EC2_AZ}${OFF}${BOLD}${GRAD}${OFF}\n\u@\h \w \\$ "
+            PS1="${INVERSE_ON}${COLOR_CYAN}${EC2_NAME} ${COLOR_BLUE}${EC2_ID} ${COLOR_RED}${EC2_AZ}${INVERSE_OFF}${OFF}\n\u@\h \w \\$ "
             ;;
         *)
-            PS1="[$EC2_NAME] [$EC2_ID] [$EC2_AZ]\n\u@\h \w \\$ "
+            PS1="${INVERSE_ON}[$EC2_NAME] [$EC2_ID] [$EC2_AZ]${INVERSE_OFF}\n\u@\h \w \\$ "
             ;;
     esac
 
     export PS1
+
+    # We may want this in the future in case we get fancy with a status bar or something
+    shopt -s checkwinsize
 fi
 
